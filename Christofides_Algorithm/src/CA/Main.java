@@ -20,16 +20,16 @@ public class Main {
 	
 	
 	public static int validateVertexCount(int _vertexCount) {
-		if(_vertexCount <= 1) {
-			return 2;
+		if(_vertexCount < 3) {
+			return 3;
 		}else {
 			return _vertexCount;
 		}
 	}
 	
 	public static int validateMapSize(int _mapSize) {
-		if(_mapSize < 50) {
-			return 50;
+		if(_mapSize < 350) {
+			return 350;
 		}else {
 			return _mapSize;
 		}
