@@ -45,7 +45,6 @@ public class Edge implements Comparable<Edge>{
 
 	@Override
 	public int compareTo(Edge o) {
-		double edgeDifference = this.edgeWeight - o.getEdgeWeight();
-		return (int)edgeDifference;
+		return Double.compare(this.edgeWeight, o.edgeWeight);
 	}
 }

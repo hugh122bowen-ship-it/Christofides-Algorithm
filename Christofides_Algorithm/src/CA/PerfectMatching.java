@@ -26,35 +26,42 @@ public class PerfectMatching {
 	
 	public Graph generatePerfectMatching(Graph pairwiseGraph, int vertexCount) {
 		Graph perfectMatching = new Graph(pairwiseGraph.getVertexCount());
-		LinkedHashMap<Integer, Integer> validEdges = new LinkedHashMap<Integer, Integer>();
 
-		
-		ArrayList<Edge> sortedEdges = perfectMatching.getSortedEdges();
-		for(Edge edge : sortedEdges ) {
-			validEdges.put(edge.getAdjacencyTableIndexX(), edge.getAdjacencyTableIndexY());
-		}
-		ArrayList<Integer> evenDegreeVertices = getEvenDegreeVertices(vertexCount);
-		for(int i = 0; i < evenDegreeVertices.size(); i++) {
-			for(int j = 0; j < vertexCount; j++) {
-				validEdges.remove(i, j);
+		 ArrayList<Edge> potentialEdges = new ArrayList<>();
+		 
+		 ArrayList<Edge> sortedEdges = pairwiseGraph.getSortedEdges();
+		 
+		 for(Edge edge : sortedEdges) {
+			 int x = edge.getAdjacencyTableIndexX();
+			 int y = edge.getAdjacencyTableIndexY();
+			 
+			 if(oddDegreeVertices.contains(x) && oddDegreeVertices.contains(y)) {
+				 potentialEdges.add(edge);
+			 }
+		 }
+		Collections.sort(potentialEdges);
+			 
+			 
+		while(potentialEdges.size() != 0) {
+			Edge chosenEdge = potentialEdges.get(0);
+				 
+			int chosenX = chosenEdge.getAdjacencyTableIndexX();
+			int chosenY = chosenEdge.getAdjacencyTableIndexY();
+				 
+			perfectMatching.addEdge(chosenEdge);
+				 
+			for(int i = potentialEdges.size()-1 ; i >= 0; i--) {
+					 
+				Edge edge = potentialEdges.get(i);
+					 
+				int x = edge.getAdjacencyTableIndexX();
+				int y = edge.getAdjacencyTableIndexY();
+					 
+				if(x == chosenX || x == chosenY || y == chosenX || y == chosenY) {
+					potentialEdges.remove(i);
+				}
 			}
 		}
-		
-		while(!validEdges.isEmpty()) {
-			Entry<Integer, Integer> firstEntry = validEdges.entrySet().iterator().next();
-			int chosenX = firstEntry.getKey();
-			int chosenY = firstEntry.getValue();
-			perfectMatching.addEdge(chosenX, chosenY, pairwiseGraph.getEdgeWeight(chosenX,chosenY));
-			
-			for(int i = 0; i < oddDegreeVertices.size(); i++) {
-				for(int j = 0; j < oddDegreeVertices.size(); j++) {
-					if(i == chosenX || i == chosenY || j == chosenX || j == chosenY) {
-						validEdges.remove(i, j);
-					}
-				} 
-			}
-		}
-		
 		return perfectMatching;
 	}
 	
