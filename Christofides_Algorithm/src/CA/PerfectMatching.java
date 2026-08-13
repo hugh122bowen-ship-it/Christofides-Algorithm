@@ -64,14 +64,5 @@ public class PerfectMatching {
 		}
 		return perfectMatching;
 	}
-	
-	private ArrayList<Integer> getEvenDegreeVertices(int vertexCount) {
-		ArrayList<Integer> evenDegreeVertices = new ArrayList<Integer>();
-		for(int i = 0; i < vertexCount; i++) {
-			evenDegreeVertices.add(i);
-		}
-		evenDegreeVertices.removeAll(oddDegreeVertices);
-		
-		return evenDegreeVertices;
-	}
+
 }

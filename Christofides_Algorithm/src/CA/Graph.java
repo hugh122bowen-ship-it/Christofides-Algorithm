@@ -26,7 +26,7 @@ public class Graph  {
 		adjacencyMatrix = new Edge[vertexCount][vertexCount];
 		for(int y =0; y < vertexCount; y++) {
 			for(int x = 0; x < vertexCount; x++) {
-				adjacencyMatrix[x][y] = new Edge(0, x, y);
+				adjacencyMatrix[x][y] = new Edge(-1, x, y);
 			}
 		}
 	}
@@ -41,7 +41,7 @@ public class Graph  {
 		ArrayList<Integer> connectedVertices = new ArrayList<Integer>();
 		
 		for(int i = 0; i < vertexCount; i++) {
-			if(adjacencyMatrix[i][v1].getEdgeWeight() != 0) {
+			if(adjacencyMatrix[i][v1].getEdgeWeight() != -1) {
 				connectedVertices.add(i);
 			}	
 		}
@@ -65,8 +65,8 @@ public class Graph  {
 		int previousEdgeX = previousEdge.getAdjacencyTableIndexX();
 		int previousEdgeY = previousEdge.getAdjacencyTableIndexY();
 		
-		adjacencyMatrix[previousEdgeX][previousEdgeY] = new Edge(0, previousEdgeX, previousEdgeY);
-		adjacencyMatrix[previousEdgeY][previousEdgeX] = new Edge(0, previousEdgeY, previousEdgeX);
+		adjacencyMatrix[previousEdgeX][previousEdgeY] = new Edge(-1, previousEdgeX, previousEdgeY);
+		adjacencyMatrix[previousEdgeY][previousEdgeX] = new Edge(-1, previousEdgeY, previousEdgeX);
 
 	}
 
@@ -90,7 +90,7 @@ public class Graph  {
 		Arrays.sort(rowCopy);
 		int index = 0;
 		for(int i = 0; i < vertexCount; i++) {
-			if(rowCopy[i].getEdgeWeight() != 0) {
+			if(rowCopy[i].getEdgeWeight() != -1) {
 				index = i;
 				break;
 			}
@@ -107,7 +107,7 @@ public class Graph  {
 		ArrayList<Edge> edgesSorted = new ArrayList<Edge>();
 		for(int y = 0; y < vertexCount; y++) {
 			for(int x = y+1; x < vertexCount; x++) {
-				if(adjacencyMatrix[x][y].getEdgeWeight() != 0) {
+				if(adjacencyMatrix[x][y].getEdgeWeight() != -1) {
 					edgesSorted.add(adjacencyMatrix[x][y]);
 				}
 				
@@ -117,9 +117,6 @@ public class Graph  {
 		return edgesSorted;
 	}
 	
-	public Edge[] getUnsortedEdgesFromRow(int row) {
-		return adjacencyMatrix[row];
-	}
 	
 	/**
 	 * 
@@ -152,7 +149,7 @@ public class Graph  {
 		for(int y = 0; y < vertexCount; y++) {
 			for(int x = y+1; x < vertexCount; x++) {
 				Double edgeWeight = g.getEdgeWeight(x, y);
-				if(edgeWeight == 0) {
+				if(edgeWeight == -1) {
 					continue;
 				}
 				if(adjacencyMatrix[x][y].getEdgeWeight() == edgeWeight) {
@@ -180,7 +177,7 @@ public class Graph  {
 		visited[current] = true;
 		
 		for(int i = 0; i < adjacencyMatrix[current].length; i++) {
-			if(adjacencyMatrix[current][i].getEdgeWeight() != 0) {
+			if(adjacencyMatrix[current][i].getEdgeWeight() != -1) {
 				if(!visited[i]) {
 					if(depthFirstTraversal(i, visited, current)) {
 						return true;
@@ -213,7 +210,7 @@ public class Graph  {
 	private boolean isOddDegree(int vertex) {
 		int degreeCount = 0;
 		for(int i = 0; i < vertexCount; i++) {
-			if(adjacencyMatrix[vertex][i].getEdgeWeight() != 0) {
+			if(adjacencyMatrix[vertex][i].getEdgeWeight() != -1) {
 				degreeCount++;
 			}
 			
@@ -247,7 +244,10 @@ public class Graph  {
 		double totalGraphWeight = 0;
 		for(int y = 0; y < vertexCount; y ++) {
 			for(int x = y+1; x < vertexCount; x++) {
-				totalGraphWeight += adjacencyMatrix[x][y].getEdgeWeight();
+				double weight = adjacencyMatrix[x][y].getEdgeWeight();
+				if(weight != -1) {
+					totalGraphWeight += weight;
+				}
 			}
 		}
 		return totalGraphWeight;
