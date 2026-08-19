@@ -125,6 +125,12 @@ public class GraphList extends GraphAbstract{
 	}
 	
 	
+	/**
+	 * Given another graph, this method adds all edges of the given graph to its graph
+	 * If there are duplicate edges, it increments an edge counter
+	 * 
+	 * @param g The graph whose edges are being added
+	 */
 	public void combineGraph(GraphList graph) {
 		ArrayList<Edge> edgesToBeAdded = new ArrayList<>();
 		for(int i = 0; i < vertexCount; i++) {
@@ -140,7 +146,10 @@ public class GraphList extends GraphAbstract{
 		}
 	}
 
-	
+	/**
+	 * 
+	 * @return An ArrayList holding the index of all vertices that have an odd number of edges connected to them
+	 */
 	public ArrayList<Integer> getOddDegreeVertices() {
 		ArrayList<Integer> oddDegreeVertices = new ArrayList<Integer>();
 		for(int i = 0; i < vertexCount; i++) {
@@ -150,7 +159,10 @@ public class GraphList extends GraphAbstract{
 		}
 		return oddDegreeVertices;
 	}
-	
+	/**
+	 * 
+	 * @return The sum of the edge weights of every edge in the graph
+	 */
 	public double getTotalGraphWeighting() {
 		double totalWeight = 0;
 		for(int i = 0; i < vertexCount; i++) {

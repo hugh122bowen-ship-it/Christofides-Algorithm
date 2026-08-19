@@ -50,6 +50,11 @@ public class MST {
 		return mst;
 	}
 	
+	
+	/**
+	 * 
+	 * @return True if this graph contains a cycle
+	 */
 	private boolean containsCycle() {
 		boolean[] visited = new boolean[mst.getVertexCount()];
 		for(int i = 0; i < visited.length; i++) {
@@ -63,6 +68,18 @@ public class MST {
 		return false;
 	}
 	
+	
+	/**
+	 * 
+	 * A depth first traversal is performed.
+	 * This method detects cycles by attempting to find previously visited vertices that aren't a parent of the current vertex
+	 * 
+	 * 
+	 * @param current 
+	 * @param visited
+	 * @param parent
+	 * @return true if a cycle is found
+	 */
 	private boolean depthFirstTraversal(int current, int parent, boolean[] visited) {
 		visited[current] = true;
 		

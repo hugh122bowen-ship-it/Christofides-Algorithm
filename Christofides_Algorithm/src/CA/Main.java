@@ -3,7 +3,7 @@ public class Main {
 	public static void main(String[] args) {
 		final int vertexCount = validateVertexCount(500);
 		final int mapSize = validateMapSize(650);
-		final int randomSeed = 100;
+		final int randomSeed = 2000;
 		
 		CityGenerator cityGenerator = new CityGenerator(vertexCount, mapSize, randomSeed);
 		GraphMatrix pairwiseGraph = cityGenerator.generatePairwiseGraph();

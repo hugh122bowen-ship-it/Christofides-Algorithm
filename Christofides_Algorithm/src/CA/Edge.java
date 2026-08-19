@@ -49,11 +49,19 @@ public class Edge implements Comparable<Edge>{
 		edgeCount++;
 	}
 
+	
+	/**
+	 * Shows how two Edge objects can be compared so that they can be sorted
+	 */
 	@Override
 	public int compareTo(Edge o) {
 		return Double.compare(this.edgeWeight, o.edgeWeight);
 	}
 	
+	
+	/**
+	 * Defines what it means for two edges to be equal
+	 */
 	@Override
 	public boolean equals(Object o) {
 		Edge other = (Edge) o;
