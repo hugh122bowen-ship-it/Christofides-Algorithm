@@ -26,7 +26,8 @@ City - A data structure that holds an x and y position.\
 CityGenerator - Generates randomly positioned cities and the pairwise graph which holds the Euclidean pairwise distance between each city.\
 Edge - A data structure that represents the connection between cities, holds the weight of the edge as well as its position in the adjacency matrix.\
 EulerianWalk - Finds a closed Eulerian Walk on a graph - a walk that starts/ends on the same vertex and visits every edge.\
-Graph - Represents a undirected weighted graph using an adjacency matrix, alongside helper methods used by the other algorithms operating on the graph.\
+GraphMatrix - Represents an undirected weighted graph using an adjacency matrix used for dense graphs such as pairwiseGraph which contains an edge between every vertex\
+GraphList - Represents an undirected weighted graph using an adjacency list, used for sparse graphs such as the minimum spanning tree, it uses a lot less memory than the graphMatrix however some processes may take slightly longer to compute.\
 GraphicsManager - Generates an image of the tour.\
 MST - Generates an MST using Kruskal's algorithm.\
 PerfectMatching - Uses a global greedy algorithm to find a perfect matching on a list of given vertices.\
