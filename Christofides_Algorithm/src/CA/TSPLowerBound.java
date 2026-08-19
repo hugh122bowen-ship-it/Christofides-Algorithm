@@ -1,4 +1,7 @@
 package CA;
+
+import java.util.ArrayList;
+
 /**
  * Calculates a lower bound for the length of a TSP tour
  */
@@ -16,23 +19,23 @@ public class TSPLowerBound {
 	 * @param vertexCount	
 	 * @return A lower bound for a TSP tour
 	 */
-	public double findTSPLowerBound(Graph pairwiseGraph, int vertexCount) {
-		Graph pairwiseGraphOneVertexRemoved = new Graph(vertexCount-1);
+	public double findTSPLowerBound(GraphMatrix pairwiseGraph, int vertexCount) {
+		GraphMatrix pairwiseGraphOneVertexRemoved = new GraphMatrix(vertexCount-1);
 		
 		for(int y = 0; y < vertexCount-1; y++) {
 			for(int x = y+1; x < vertexCount-1; x++) {
 				pairwiseGraphOneVertexRemoved.addEdge(x, y, pairwiseGraph.getEdgeWeight(x, y));
 			}
 		}
-		MST mstGenerator = new MST(pairwiseGraphOneVertexRemoved);
-		Graph mstOneVertexRemoved = mstGenerator.generateMST();
+		MST mstGenerator = new MST();
+		GraphList mstOneVertexRemoved = mstGenerator.generateMST(pairwiseGraphOneVertexRemoved);
 		
-		Edge[] sortedEdges = pairwiseGraph.getSortedEdgesFromRow(vertexCount-1);
+		ArrayList<Edge> sortedEdges = pairwiseGraph.getSortedEdgesFromRow(vertexCount-1);
 		
 		double lowerTSPBound = 0;
 		lowerTSPBound += mstOneVertexRemoved.getTotalGraphWeighting();
-		lowerTSPBound += sortedEdges[0].getEdgeWeight();
-		lowerTSPBound += sortedEdges[1].getEdgeWeight();
+		lowerTSPBound += sortedEdges.get(0).getEdgeWeight();
+		lowerTSPBound += sortedEdges.get(1).getEdgeWeight();
 		
 		
 		return lowerTSPBound;

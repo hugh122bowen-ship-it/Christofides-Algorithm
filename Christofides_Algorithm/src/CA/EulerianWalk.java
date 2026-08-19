@@ -27,7 +27,7 @@ public class EulerianWalk {
 	 * 
 	 * @param eulerianGraph Graph containing a closed Eulerian walk
 	 */
-	public void generateEulerianWalk(Graph eulerianGraph) {
+	public void generateEulerianWalk(GraphList eulerianGraph) {
 		Stack<Integer> stack = new Stack<Integer>();
 		stack.push(0);
 		

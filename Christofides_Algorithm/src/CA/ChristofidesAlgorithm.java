@@ -28,14 +28,16 @@ public class ChristofidesAlgorithm {
 	 * 
 	 * @return A graph containing a TSP tour
 	 */
-	public Graph generateTour(Graph pairwiseGraph) {
-		
-		MST mstGenerator = new MST(pairwiseGraph);
-		Graph mst = mstGenerator.generateMST();
-		
+	public GraphList generateTour(GraphMatrix pairwiseGraph) {
+		MST mstGenerator = new MST();
+		GraphList mst = mstGenerator.generateMST(pairwiseGraph);
+
 		PerfectMatching perfectMatchingGenerator = new PerfectMatching(mst.getOddDegreeVertices());
-		Graph mpm = perfectMatchingGenerator.generatePerfectMatching(pairwiseGraph, vertexCount);
+		GraphList mpm = perfectMatchingGenerator.generatePerfectMatching(pairwiseGraph, vertexCount);
+
 		mst.combineGraph(mpm);
+		
+	
 		
 		EulerianWalk eulerianWalk = new EulerianWalk();
 		eulerianWalk.generateEulerianWalk(mst);
@@ -43,8 +45,7 @@ public class ChristofidesAlgorithm {
 		
 		ArrayList<Integer> hamiltonianWalk = shortcutEulerianCircuit(walk, vertexCount);
 		
-		Graph tSPTour = generateGraph(hamiltonianWalk, vertexCount, pairwiseGraph);
-		
+		GraphList tSPTour = generateGraph(hamiltonianWalk, vertexCount, pairwiseGraph);
 		return tSPTour;
 	}
 	
@@ -62,8 +63,8 @@ public class ChristofidesAlgorithm {
 		return hamiltonianCircuit;
 	}
 	
-	private Graph generateGraph(ArrayList<Integer> hamiltonianCircuit, int vertexCount, Graph pairwiseGraph) {
-		Graph hamiltonianGraph = new Graph(vertexCount);
+	private GraphList generateGraph(ArrayList<Integer> hamiltonianCircuit, int vertexCount, GraphMatrix pairwiseGraph) {
+		GraphList hamiltonianGraph = new GraphList(vertexCount);
 		
 		for(int i = 1; i < hamiltonianCircuit.size(); i++) {
 			int currentVertex = hamiltonianCircuit.get(i);

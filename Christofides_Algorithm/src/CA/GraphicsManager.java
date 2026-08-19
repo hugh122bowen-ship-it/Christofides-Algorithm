@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 
 public class GraphicsManager {
 
-	public BufferedImage generateGraphImage(City[] cities, Graph graph, int mapSize, double tSPLowerBound) {
+	public BufferedImage generateGraphImage(City[] cities, GraphList graph, int mapSize, double tSPLowerBound) {
         BufferedImage image = new BufferedImage(
         		mapSize, mapSize+35, BufferedImage.TYPE_INT_RGB
             );
@@ -19,18 +19,22 @@ public class GraphicsManager {
         g.fillRect(0, 0, mapSize, mapSize+35);
         
         g.setColor(Color.black);
+        
         for (Edge edge : graph.getSortedEdges()) {
-
+        	g.setColor(Color.black);
+        	
             int x1 = cities[edge.getAdjacencyTableIndexX()].getPosX();
             int y1 = cities[edge.getAdjacencyTableIndexX()].getPosY();
 
             int x2 = cities[edge.getAdjacencyTableIndexY()].getPosX();
             int y2 = cities[edge.getAdjacencyTableIndexY()].getPosY();
+            
             g.drawLine(x1, y1, x2, y2);
         }
         
         for(int i = 0; i < cities.length; i++) {
         	g.fillOval(cities[i].getPosX()-2, cities[i].getPosY()-2, 5, 5);
+        	//g.drawString(i+"", cities[i].getPosX(), cities[i].getPosY());
         }
         g.drawString("Total Graph Weight: "+(int)graph.getTotalGraphWeighting(), 10, mapSize+20);
         g.drawString("TSP LowerBound: "+(int)tSPLowerBound, mapSize-150, mapSize+20);
@@ -43,7 +47,7 @@ public class GraphicsManager {
 	
     public void showImage(BufferedImage image) {
 
-        JFrame frame = new JFrame("My Image");
+        JFrame frame = new JFrame("TSPTour");
 
         JLabel label = new JLabel(new ImageIcon(image));
 

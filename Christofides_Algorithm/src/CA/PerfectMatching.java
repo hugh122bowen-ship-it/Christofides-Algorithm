@@ -2,10 +2,6 @@ package CA;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map.Entry;
 
 /**
  * Creates a perfect matching on a set of given vertices
@@ -24,10 +20,11 @@ public class PerfectMatching {
 	 * @return A graph containing a perfect matching on a set of given vertices
 	 */
 	
-	public Graph generatePerfectMatching(Graph pairwiseGraph, int vertexCount) {
-		Graph perfectMatching = new Graph(pairwiseGraph.getVertexCount());
+	public GraphList generatePerfectMatching(GraphMatrix pairwiseGraph, int vertexCount) {
+		GraphList perfectMatching = new GraphList(pairwiseGraph.getVertexCount());
 
 		 ArrayList<Edge> potentialEdges = new ArrayList<>();
+		 ArrayList<Integer> matchedVertices = new ArrayList<>();
 		 
 		 ArrayList<Edge> sortedEdges = pairwiseGraph.getSortedEdges();
 		 
@@ -48,7 +45,14 @@ public class PerfectMatching {
 			int chosenX = chosenEdge.getAdjacencyTableIndexX();
 			int chosenY = chosenEdge.getAdjacencyTableIndexY();
 				 
-			perfectMatching.addEdge(chosenEdge);
+			if(matchedVertices.contains(chosenX) || matchedVertices.contains(chosenY)) {
+				potentialEdges.remove(0);
+				continue;
+			}
+			
+			perfectMatching.addEdge(chosenX, chosenY, chosenEdge.getEdgeWeight());
+			matchedVertices.add(chosenX);
+			matchedVertices.add(chosenY);
 				 
 			for(int i = potentialEdges.size()-1 ; i >= 0; i--) {
 					 
@@ -62,6 +66,7 @@ public class PerfectMatching {
 				}
 			}
 		}
+		
 		return perfectMatching;
 	}
 

@@ -10,6 +10,8 @@ public class Edge implements Comparable<Edge>{
 	private final int adjacencyTableIndexY;
 	private int edgeCount = 1;
 	private boolean edgeUsed = false;
+	
+	
 	public Edge(double edgeWeight, int adjacencyTableIndexX, int adjacencyTableIndexY) {
 		this.edgeWeight = edgeWeight;
 		this.adjacencyTableIndexX = adjacencyTableIndexX;
@@ -26,6 +28,10 @@ public class Edge implements Comparable<Edge>{
 	
 	public boolean getEdgeUsed() {
 		return this.edgeUsed;
+	}
+	
+	public int getEdgeCount() {
+		return this.edgeCount;
 	}
 	
 	public double getEdgeWeight() {
@@ -46,5 +52,14 @@ public class Edge implements Comparable<Edge>{
 	@Override
 	public int compareTo(Edge o) {
 		return Double.compare(this.edgeWeight, o.edgeWeight);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		Edge other = (Edge) o;
+		return ((this.adjacencyTableIndexX == other.getAdjacencyTableIndexX() && this.adjacencyTableIndexY == other.getAdjacencyTableIndexY()) ||
+				(this.adjacencyTableIndexX == other.getAdjacencyTableIndexY() && this.adjacencyTableIndexY == other.getAdjacencyTableIndexX()));
+	
+			
 	}
 }

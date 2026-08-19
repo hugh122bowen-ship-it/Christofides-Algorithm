@@ -9,19 +9,19 @@ public class CityGenerator {
 	private final int mapSize;
 	private City[] cities;
 	private int cityCount;
-	public CityGenerator(int cityCount, int mapSize) {
+	public CityGenerator(int cityCount, int mapSize, int randomSeed) {
 		this.cityCount = cityCount;
 		this.mapSize = mapSize;
-		cities = generateCities();
+		cities = generateCities(randomSeed);
 	}
 	
 	
 	/**
-	 * @return An array of City classes with randomly generated coo	rdinates in a given area
+	 * @return An array of City classes with randomly generated coordinates in a given area
 	 */
-	public City[] generateCities() {
+	public City[] generateCities(int randomSeed) {
 		City[] cities = new City[cityCount];
-		Random random = new Random();
+		Random random = new Random(randomSeed);
 		for(int i = 0; i < cityCount; i++) {
 			int generatedXPos = random.nextInt(mapSize);
 			int generatedYPos = random.nextInt(mapSize);
@@ -35,8 +35,8 @@ public class CityGenerator {
 	 * Generates a complete weighted graph, each edge is the pairwise distance between the two vertices it is connected to
 	 * @return
 	 */
-	public Graph generatePairwiseGraph() {
-		Graph pairwiseGraph = new Graph(cityCount);
+	public GraphMatrix generatePairwiseGraph() {
+		GraphMatrix pairwiseGraph = new GraphMatrix(cityCount);
 		for(int y = 0; y < cityCount; y++) {
 			for(int x = y+1; x < cityCount; x++) {
 				double pairwiseDistance = findDistanceBetweenCities(cities[x], cities[y]);
